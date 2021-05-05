@@ -1,0 +1,15 @@
+project_name: k6
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://proxy.golang.org
+build:
+  main: .
+  goos:
+    - darwin
+    - linux
+    - windows
+  goarch:
+    - amd64
+    - 386
+  goarm:
+    - 7
