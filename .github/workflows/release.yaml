@@ -1,33 +1,25 @@
-name: Release
+name: goreleaser
 
 on:
+  pull_request:
   push:
-    tags:
-    - '*'
-
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  release-sysl:
-    name: Release
+  goreleaser:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.16
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
+        name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.16
-
-      - name: Check out code
-        uses: actions/checkout@master
-
-      - name: Unshallow
-        run: git fetch --prune --unshallow
-
-      - name: Set GOVERSION env var
-        run: echo "GOVERSION=$(go version | awk '{print $3, $4;}')" >> $GITHUB_ENV
-
-      - name: Run GoReleaser
+          go-version: 1.15
+      -
+        name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
